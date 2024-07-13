@@ -1,13 +1,20 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import { CheckSvg } from "../../../assets/icons/check.svg";
 
 interface Props {
   text?: string;
   text2?: string;
   selected?: boolean;
+  completed?: boolean;
 }
 
-export const TimelineItem: React.FC<Props> = ({ text, text2, selected }) => {
+export const TimelineItem: React.FC<Props> = ({
+  text,
+  text2,
+  selected,
+  completed,
+}) => {
   return (
     <li
       className={twMerge(
@@ -17,10 +24,16 @@ export const TimelineItem: React.FC<Props> = ({ text, text2, selected }) => {
       <div className="flex items-center z-10">
         <div
           className={twMerge(
-            "w-4 h-4 border-2 border-base-200 rounded-lg bg-base-100",
-            selected ? "group-last/item:border-secondary" : ""
+            "w-4 h-4 border-2 border-primary rounded-lg bg-base-100",
+            selected
+              ? "group-last/item:border-primary"
+              : "group-last/item:border-base-200"
           )}
-        ></div>
+        >
+          {completed && (
+            <CheckSvg className="w-full h-full z-10 scale-125"></CheckSvg>
+          )}
+        </div>
         <p className="ml-1 font-semibold">{text}</p>
 
         <div className="flex-1"></div>

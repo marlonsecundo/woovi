@@ -12,7 +12,7 @@ export const PageLayout: React.FC<Props> = (props) => {
     <div
       {...props}
       className={twMerge(
-        "bg-base-100 px-page-padding flex flex-col ",
+        "bg-base-100 px-page-padding flex flex-col flex-1",
         props.className
       )}
     />
