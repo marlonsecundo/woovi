@@ -4,7 +4,7 @@ import { Title } from "../../ui/layout/typografy/title";
 import { RadioGroup } from "../../ui/layout/inputs/radio-group";
 import { RadioPriceItem } from "../../ui/layout/inputs/radio-price-item";
 import { Footer } from "../../ui/components/footer";
-import { FlagLabelSvg } from "../../ui/assets/icons/flag-label.svg";
+import { FlagLabelSvg } from "../../assets/icons/flag-label.svg";
 import { FlagText } from "../../ui/components/flag-text";
 import { PageLayout } from "../../ui/layout/page.layout";
 

@@ -7,14 +7,11 @@ interface Props
     HTMLDivElement
   > {}
 
-export const PageLayout: React.FC<Props> = (props) => {
+export const Divider: React.FC<Props> = (props) => {
   return (
     <div
       {...props}
-      className={twMerge(
-        "bg-base-100 px-page-padding flex flex-col ",
-        props.className
-      )}
+      className={twMerge("h-[2px] w-full bg-base-200", props.className)}
     />
   );
 };

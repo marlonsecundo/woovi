@@ -1,6 +1,6 @@
 import React from "react";
-import { GuardSvg } from "../assets/icons/guard.svg";
-import { LogoSvg } from "../assets/icons/logo.svg";
+import { GuardSvg } from "../../assets/icons/guard.svg";
+import { LogoSvg } from "../../assets/icons/logo.svg";
 
 // import { Container } from './styles';
 

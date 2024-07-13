@@ -1,5 +1,5 @@
 import React from "react";
-import { FlagLabelSvg } from "../assets/icons/flag-label.svg";
+import { FlagLabelSvg } from "../../assets/icons/flag-label.svg";
 
 interface Props {
   text1: string;

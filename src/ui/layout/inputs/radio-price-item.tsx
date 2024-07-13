@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckSvg } from "../../assets/icons/check.svg";
-import { UncheckSvg } from "../../assets/icons/uncheck.svg";
+import { CheckSvg } from "../../../assets/icons/check.svg";
+import { UncheckSvg } from "../../../assets/icons/uncheck.svg";
 
 interface Props {
   title: string;
