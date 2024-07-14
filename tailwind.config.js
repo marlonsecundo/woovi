@@ -18,7 +18,7 @@ export default withMT({
       },
 
       screens: {
-        xxs: "300px",
+        xxs: "340px",
         xs: "400px",
       },
 
@@ -30,7 +30,7 @@ export default withMT({
         nunito: ["Nunito", "sans-serif"],
       },
       padding: {
-        "page-padding": "20px",
+        "page-padding": "15px",
       },
     },
   },
