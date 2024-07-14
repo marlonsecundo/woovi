@@ -1,52 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "../../ui/components/header";
 import { Title } from "../../ui/layout/typografy/title";
 import { RadioGroup } from "../../ui/layout/inputs/radio-group";
 import { RadioPriceItem } from "../../ui/layout/inputs/radio-price-item";
 import { Footer } from "../../ui/components/footer";
-import { FlagLabelSvg } from "../../assets/icons/flag-label.svg";
 import { FlagText } from "../../ui/components/flag-text";
 import { PageLayout } from "../../ui/layout/page.layout";
+import { firstPrice, portionPrices } from "../../data/prices";
+import { useController } from "./controller";
+import { Button } from "../../ui/layout/inputs/button";
 
 export const PaymentMethodView: React.FC = () => {
-  const data = [
-    {
-      number: 2,
-      title: "R$ 15.300,00",
-      subtitle: "Total: R$ 30.620,00",
-    },
-    {
-      number: 3,
-      title: "R$ 10.196,66",
-      subtitle: "Total: R$ 30.620,00",
-    },
-    {
-      number: 4,
-      title: "R$ 7.725,00",
-      subtitle: "Total: R$ 30.900,00",
-      footer: (
-        <FlagText
-          text1=" -3% de juros:"
-          text2="Melhor opção de parcelamento"
-        ></FlagText>
-      ),
-    },
-    {
-      number: 5,
-      title: "R$ 6.300,00",
-      subtitle: "Total: R$ 31.500,00",
-    },
-    {
-      number: 6,
-      title: "R$ 5.283,33",
-      subtitle: "Total: R$ 31.699,98",
-    },
-    {
-      number: 7,
-      title: "R$ 4.542,85",
-      subtitle: "Total: R$ 31.800,00",
-    },
-  ];
+  const controller = useController();
+
+  const { priceItemId, form } = controller;
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    controller.submitForm();
+  };
 
   return (
     <PageLayout>
@@ -54,12 +27,12 @@ export const PaymentMethodView: React.FC = () => {
 
       <Title className="self-center mb-8">João, como você quer pagar?</Title>
 
-      <form>
+      <form onSubmit={onSubmit} className="flex flex-col">
         <RadioGroup label="Pix">
           <RadioPriceItem
             name="price"
-            number={"1x"}
-            title={"R$ 30.500,00"}
+            number={firstPrice.number + "x"}
+            title={firstPrice.value}
             subtitle={
               <p className="text-primary font-semibold">
                 Ganhe <span className="font-extrabold">3%</span> de Cashback
@@ -71,21 +44,36 @@ export const PaymentMethodView: React.FC = () => {
                 text2=" de volta no seu Pix na hora"
               ></FlagText>
             }
+            onValueChange={(checked) =>
+              checked &&
+              form.setValue("priceItemId", firstPrice.number.toString())
+            }
           ></RadioPriceItem>
         </RadioGroup>
 
         <RadioGroup label="Pix Parcelado">
-          {data.map((i) => (
+          {portionPrices.map((i) => (
             <RadioPriceItem
               key={i.number}
               name="price"
               number={i.number + "x"}
-              title={i.title}
-              subtitle={i.subtitle}
+              title={i.value}
+              subtitle={"Total: " + i.total}
               footer={i.footer}
+              onValueChange={(checked) =>
+                checked && form.setValue("priceItemId", i.number.toString())
+              }
             ></RadioPriceItem>
           ))}
         </RadioGroup>
+
+        <Button
+          className="self-center mb-5"
+          type="submit"
+          disabled={priceItemId === null}
+        >
+          Confirmar
+        </Button>
       </form>
 
       <div className="flex-1"></div>

@@ -8,6 +8,8 @@ interface Props {
   subtitle: string | React.ReactNode;
   footer?: React.ReactNode;
   name: string;
+
+  onValueChange?: (checked: boolean) => void;
 }
 
 export const RadioPriceItem: React.FC<Props> = ({
@@ -16,6 +18,7 @@ export const RadioPriceItem: React.FC<Props> = ({
   subtitle,
   name,
   footer,
+  onValueChange = () => {},
 }) => {
   return (
     <li className="py-4 px-4 flex relative justify-between border-base-200 border-2 has-[:checked]:border-primary border-b-transparent last:rounded-b-10 last:border-b-base-200 first:rounded-t-10">
@@ -25,7 +28,9 @@ export const RadioPriceItem: React.FC<Props> = ({
           {title}
         </p>
 
-        <p className="font-nunito font-semibold text-base-300">{subtitle}</p>
+        <div className="font-nunito font-semibold text-base-300">
+          {subtitle}
+        </div>
 
         {footer}
       </div>
@@ -36,6 +41,7 @@ export const RadioPriceItem: React.FC<Props> = ({
             type="radio"
             name={name}
             className="peer absolute w-full h-full opacity-0"
+            onChange={(e) => onValueChange(e.target.checked)}
           ></input>
 
           <CheckSvg className="absolute top-5 right-4  opacity-0 peer-checked:opacity-100  pointer-events-none"></CheckSvg>

@@ -1,6 +1,5 @@
 import React from "react";
 import { SelectOptionProps, Option as MOption } from "@material-tailwind/react";
-import { twMerge } from "tailwind-merge";
 
 interface Props extends SelectOptionProps {}
 

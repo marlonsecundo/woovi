@@ -11,7 +11,7 @@ export const UncheckSvg: React.FC<SvgPropsWithClassname> = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <circle cx="13" cy="13" r="12" stroke="#E5E5E5" stroke-width="2" />
+      <circle cx="13" cy="13" r="12" stroke="#E5E5E5" strokeWidth="2" />
     </svg>
   );
 };

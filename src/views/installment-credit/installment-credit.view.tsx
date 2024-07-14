@@ -7,12 +7,24 @@ import { Input } from "../../ui/layout/inputs/input";
 import { Select } from "../../ui/layout/inputs/select";
 import { Option } from "../../ui/layout/inputs/option";
 import { Button } from "../../ui/layout/inputs/button";
-import { TimelineGroup } from "../../ui/layout/data-display/timeline-group";
-import { TimelineItem } from "../../ui/layout/data-display/timeline";
 import { Divider } from "../../ui/layout/divider";
 import { Accordion } from "../../ui/layout/data-display/accordion";
+import { PriceItemInfo } from "../../ui/components/price-item-info";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useController } from "./controller";
+import { Controller } from "react-hook-form";
+import { formatCPF, formatCVV, formatDate } from "../../utils/formatter.utils";
+import { data } from "../../data/prices";
+import { Dialog, DialogFooter, DialogHeader } from "@material-tailwind/react";
 
 export const InstallmentCreditView: React.FC = () => {
+  const controller = useController();
+  const navigate = useNavigate();
+
+  const { priceItem, form } = controller;
+
+  if (priceItem === undefined) return <Navigate to={"/"} replace></Navigate>;
+
   return (
     <PageLayout>
       <Header></Header>
@@ -21,24 +33,105 @@ export const InstallmentCreditView: React.FC = () => {
         João, pague o restante em 1x no cartão
       </Title>
 
-      <form className="flex flex-col gap-3">
-        <Input type="text" label="Nome completo"></Input>
-        <Input type="text" label="CPF"></Input>
-        <Input type="text" label="Número do cartão"></Input>
+      <form className="flex flex-col gap-3" onSubmit={controller.submitForm}>
+        <Controller
+          control={form.control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <Input
+              type="text"
+              onChange={(e) => field.onChange(e.target.value)}
+              value={field.value}
+              label="Nome completo"
+              error={fieldState.error?.message}
+            ></Input>
+          )}
+        ></Controller>
 
-        <div className="flex gap-3">
-          <Input
-            type="text"
-            className="!flex !flex-1"
-            label="Vencimento"
-          ></Input>
-          <Input type="text" className="!flex !flex-1" label="CVV"></Input>
+        <Controller
+          control={form.control}
+          name="cpf"
+          render={({ field, fieldState }) => (
+            <Input
+              placeholder="000.000.000-00"
+              type="text"
+              onChange={(e) => field.onChange(formatCPF(e.target.value))}
+              value={field.value}
+              label="CPF"
+              error={fieldState.error?.message}
+            ></Input>
+          )}
+        ></Controller>
+
+        <Controller
+          control={form.control}
+          name="creditCard.cardNumber"
+          render={({ field, fieldState }) => (
+            <Input
+              type="text"
+              onChange={(e) =>
+                field.onChange(e.target.value.replace(/\D/g, ""))
+              }
+              value={field.value}
+              label="Número do cartão"
+              error={fieldState.error?.message}
+            ></Input>
+          )}
+        ></Controller>
+
+        <div className="flex gap-3 flex-col xxs:flex-row">
+          <Controller
+            control={form.control}
+            name="creditCard.expirationDate"
+            render={({ field, fieldState }) => (
+              <Input
+                placeholder="00/00"
+                type="text"
+                label="Vencimento"
+                value={field.value}
+                onChange={(e) => field.onChange(formatDate(e.target.value))}
+                error={fieldState.error?.message}
+              ></Input>
+            )}
+          ></Controller>
+
+          <Controller
+            control={form.control}
+            name="creditCard.cvv"
+            render={({ field, fieldState }) => (
+              <Input
+                type="text"
+                label="CVV"
+                value={field.value}
+                onChange={(e) => field.onChange(formatCVV(e.target.value))}
+                error={fieldState.error?.message}
+              ></Input>
+            )}
+          ></Controller>
         </div>
-        <Select label="Parcelas">
-          <Option>1x de R$ 15.300,00</Option>
-        </Select>
 
-        <Button className="w-full">Pagar</Button>
+        <Controller
+          control={form.control}
+          name="creditCard.numberInstallments"
+          render={({ field, fieldState }) => (
+            <Select
+              label="Parcelas"
+              onChange={(e) => field.onChange(e)}
+              error={fieldState.error?.message}
+              value={field.value}
+            >
+              {data.map((i) => (
+                <Option key={i.number} value={i.number.toString()}>
+                  {i.number}x de R$ {i.value}
+                </Option>
+              ))}
+            </Select>
+          )}
+        ></Controller>
+
+        <Button className="w-full" type="submit">
+          Pagar
+        </Button>
       </form>
 
       <div className="font-nunito text-base font-semibold self-center mt-5">
@@ -46,18 +139,7 @@ export const InstallmentCreditView: React.FC = () => {
         <p className="font-extrabold text-base-content">15/12/2021 - 08:17</p>
       </div>
 
-      <TimelineGroup className="mt-5">
-        <TimelineItem
-          text="1ª entrada no Pix"
-          text2="R$ 15.300,00"
-          completed
-        ></TimelineItem>
-        <TimelineItem
-          selected
-          text="2ª no cartão"
-          text2="R$ 15.300,00"
-        ></TimelineItem>
-      </TimelineGroup>
+      <PriceItemInfo priceItem={priceItem}></PriceItemInfo>
 
       <Divider className="mb-5 mt-3"></Divider>
 
@@ -83,6 +165,18 @@ constantly trying to express ourselves and actualize our dreams."
         </p>
       </div>
       <Footer></Footer>
+
+      <Dialog open={controller.open} handler={() => {}}>
+        <DialogHeader className="font-nunito">
+          Pagamento realizado com sucesso!
+        </DialogHeader>
+
+        <DialogFooter>
+          <Button onClick={() => navigate("/")}>
+            <span>Confirmar</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </PageLayout>
   );
 };

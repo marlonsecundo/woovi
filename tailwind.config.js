@@ -17,6 +17,11 @@ export default withMT({
         "secondary-content": "#FFFFFF",
       },
 
+      screens: {
+        xxs: "300px",
+        xs: "400px",
+      },
+
       borderRadius: {
         10: "10px",
       },
