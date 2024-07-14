@@ -30,6 +30,31 @@ export const InstallmentPixView: React.FC = () => {
 
   if (priceItemId === undefined) return <Navigate to={"/"} replace></Navigate>;
 
+  const handleCopy = async () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(qrCode);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = qrCode;
+
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        textArea.remove();
+      }
+    }
+
+    setAlertOpen(true);
+  };
+
   return (
     <PageLayout>
       <Header></Header>
@@ -54,8 +79,7 @@ export const InstallmentPixView: React.FC = () => {
       <Button
         className="self-center"
         onClick={() => {
-          navigator.clipboard.writeText(qrCode);
-          setAlertOpen(true);
+          handleCopy();
         }}
       >
         <p className="flex items-center">
