@@ -42,7 +42,7 @@ export function useController() {
     resolver: joiResolver(createPaymentSchema),
   });
 
-  const handleValidSubmit = (data: CreatePaymentFormData) => {
+  const handleValidSubmit = (_data: CreatePaymentFormData) => {
     setOpen(true);
   };
 
