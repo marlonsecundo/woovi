@@ -2,9 +2,13 @@ import { InstallmentCreditView } from "./views/installment-credit/installment-cr
 import { InstallmentPixView } from "./views/installment-pix/installment-pix.view";
 import { PaymentMethodView } from "./views/payment-method/payment-method.view";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createHashRouter,
+} from "react-router-dom";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
@@ -19,7 +23,7 @@ const router = createBrowserRouter(
       element: <InstallmentCreditView></InstallmentCreditView>,
     },
   ],
-  { basename: "woovi" }
+  {}
 );
 
 function App() {
