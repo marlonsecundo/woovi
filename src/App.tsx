@@ -2,11 +2,7 @@ import { InstallmentCreditView } from "./views/installment-credit/installment-cr
 import { InstallmentPixView } from "./views/installment-pix/installment-pix.view";
 import { PaymentMethodView } from "./views/payment-method/payment-method.view";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  createHashRouter,
-} from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 
 const router = createHashRouter(
   [
