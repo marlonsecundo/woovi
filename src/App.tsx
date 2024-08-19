@@ -4,20 +4,23 @@ import { PaymentMethodView } from "./views/payment-method/payment-method.view";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <PaymentMethodView></PaymentMethodView>,
-  },
-  {
-    path: "/pix",
-    element: <InstallmentPixView></InstallmentPixView>,
-  },
-  {
-    path: "/credit",
-    element: <InstallmentCreditView></InstallmentCreditView>,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <PaymentMethodView></PaymentMethodView>,
+    },
+    {
+      path: "/pix",
+      element: <InstallmentPixView></InstallmentPixView>,
+    },
+    {
+      path: "/credit",
+      element: <InstallmentCreditView></InstallmentCreditView>,
+    },
+  ],
+  { basename: "woovi" }
+);
 
 function App() {
   return (
